@@ -1,0 +1,258 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXFileReference section */
+		A10000010000000000000001 /* MemLite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemLite.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000010000000000000002 /* MemLiteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemLiteApp.swift; sourceTree = "<group>"; };
+		A10000010000000000000003 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A10000010000000000000004 /* MemorySnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorySnapshot.swift; sourceTree = "<group>"; };
+		A10000010000000000000005 /* MemoryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryReader.swift; sourceTree = "<group>"; };
+		A10000010000000000000006 /* JunkCleaner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JunkCleaner.swift; sourceTree = "<group>"; };
+		A10000010000000000000007 /* StatusItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusItemController.swift; sourceTree = "<group>"; };
+		A10000010000000000000008 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A10000010000000000000009 /* JunkOpenFiles.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = JunkOpenFiles.c; sourceTree = "<group>"; };
+		A1000001000000000000000A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A10000020000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A10000030000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				A10000030000000000000002 /* MemLite */,
+				A10000030000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A10000030000000000000002 /* MemLite */ = {
+			isa = PBXGroup;
+			children = (
+				A10000010000000000000002 /* MemLiteApp.swift */,
+				A10000010000000000000003 /* AppDelegate.swift */,
+				A10000010000000000000004 /* MemorySnapshot.swift */,
+				A10000010000000000000005 /* MemoryReader.swift */,
+				A10000010000000000000006 /* JunkCleaner.swift */,
+				A10000010000000000000009 /* JunkOpenFiles.c */,
+				A10000010000000000000007 /* StatusItemController.swift */,
+				A1000001000000000000000A /* Assets.xcassets */,
+				A10000010000000000000008 /* Info.plist */,
+			);
+			path = MemLite;
+			sourceTree = "<group>";
+		};
+		A10000030000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A10000010000000000000001 /* MemLite.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A10000040000000000000001 /* MemLite */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10000070000000000000002 /* Build configuration list for PBXNativeTarget "MemLite" */;
+			buildPhases = (
+				A10000050000000000000001 /* Sources */,
+				A10000020000000000000001 /* Frameworks */,
+				A10000050000000000000002 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MemLite;
+			productName = MemLite;
+			productReference = A10000010000000000000001 /* MemLite.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A10000060000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					A10000040000000000000001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = A10000070000000000000001 /* Build configuration list for PBXProject "MemLite" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = ko;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				ko,
+				Base,
+			);
+			mainGroup = A10000030000000000000001;
+			productRefGroup = A10000030000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A10000040000000000000001 /* MemLite */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A10000050000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000080000000000000001 /* MemLiteApp.swift in Sources */,
+				A10000080000000000000002 /* AppDelegate.swift in Sources */,
+				A10000080000000000000003 /* MemorySnapshot.swift in Sources */,
+				A10000080000000000000004 /* MemoryReader.swift in Sources */,
+				A10000080000000000000005 /* JunkCleaner.swift in Sources */,
+				A10000080000000000000007 /* JunkOpenFiles.c in Sources */,
+				A10000080000000000000006 /* StatusItemController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A10000050000000000000002 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000080000000000000008 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXBuildFile section */
+		A10000080000000000000001 /* MemLiteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000010000000000000002 /* MemLiteApp.swift */; };
+		A10000080000000000000002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000010000000000000003 /* AppDelegate.swift */; };
+		A10000080000000000000003 /* MemorySnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000010000000000000004 /* MemorySnapshot.swift */; };
+		A10000080000000000000004 /* MemoryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000010000000000000005 /* MemoryReader.swift */; };
+		A10000080000000000000005 /* JunkCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000010000000000000006 /* JunkCleaner.swift */; };
+		A10000080000000000000006 /* StatusItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000010000000000000007 /* StatusItemController.swift */; };
+		A10000080000000000000007 /* JunkOpenFiles.c in Sources */ = {isa = PBXBuildFile; fileRef = A10000010000000000000009 /* JunkOpenFiles.c */; };
+		A10000080000000000000008 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000001000000000000000A /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin XCBuildConfiguration section */
+		A10000090000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A10000090000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		A10000090000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MemLite/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.memlite.MemLite;
+				PRODUCT_NAME = MemLite;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A10000090000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MemLite/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.memlite.MemLite;
+				PRODUCT_NAME = MemLite;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A10000070000000000000001 /* Build configuration list for PBXProject "MemLite" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10000090000000000000001 /* Debug */,
+				A10000090000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10000070000000000000002 /* Build configuration list for PBXNativeTarget "MemLite" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10000090000000000000003 /* Debug */,
+				A10000090000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A10000060000000000000001 /* Project object */;
+}
