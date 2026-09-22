@@ -71,13 +71,26 @@ enum JunkCleaner {
     }
 
     static func confirmationText(for result: JunkScanResult) -> String {
-        """
-        휴지통  \(MemoryByteFormat.detail(result.trashBytes))
-        사용자 캐시  \(MemoryByteFormat.detail(result.cacheBytes))
-        사용자 로그  \(MemoryByteFormat.detail(result.logBytes))
-        합계  \(MemoryByteFormat.detail(result.totalBytes))
-        """
+        menuLines(for: result)
+            .map { "\($0.name)  \($0.value)" }
+            .joined(separator: "\n")
     }
+
+    static func menuLines(for result: JunkScanResult) -> [MemoryDetailLine] {
+        [
+            MemoryDetailLine(name: "휴지통", value: MemoryByteFormat.detail(result.trashBytes)),
+            MemoryDetailLine(name: "사용자 캐시", value: MemoryByteFormat.detail(result.cacheBytes)),
+            MemoryDetailLine(name: "사용자 로그", value: MemoryByteFormat.detail(result.logBytes)),
+            MemoryDetailLine(name: "정크 합계", value: MemoryByteFormat.detail(result.totalBytes)),
+        ]
+    }
+
+    static let calculatingMenuLines: [MemoryDetailLine] = [
+        MemoryDetailLine(name: "휴지통", value: "계산 중…"),
+        MemoryDetailLine(name: "사용자 캐시", value: "계산 중…"),
+        MemoryDetailLine(name: "사용자 로그", value: "계산 중…"),
+        MemoryDetailLine(name: "정크 합계", value: "계산 중…"),
+    ]
 
     static func deletedText(bytes: UInt64) -> String {
         "\(MemoryByteFormat.detail(bytes))를 지웠습니다."

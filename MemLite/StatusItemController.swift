@@ -32,12 +32,16 @@ enum MenuBarTitle {
 final class StatusItemController: NSObject, NSMenuDelegate {
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let detailItems: [NSMenuItem]
+    private let junkDetailItems: [NSMenuItem]
     private let openAtLoginItem: NSMenuItem
     private let versionItem: NSMenuItem
     private var snapshot: MemorySnapshot?
     private var rendered: RenderState?
+    private var lastJunkScan: JunkScanResult?
     private var menuIsOpen = false
     private var isCleaningJunk = false
+    private var isScanningJunk = false
+    private var junkScanGeneration = 0
 
     var isMenuOpen: Bool {
         menuIsOpen
@@ -45,6 +49,11 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
     override init() {
         detailItems = (0..<7).map { _ in
+            let item = NSMenuItem(title: "", action: nil, keyEquivalent: "")
+            item.isEnabled = false
+            return item
+        }
+        junkDetailItems = (0..<4).map { _ in
             let item = NSMenuItem(title: "", action: nil, keyEquivalent: "")
             item.isEnabled = false
             return item
@@ -61,6 +70,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         statusItem.button?.image = nil
         statusItem.menu = makeMenu()
         refreshOpenAtLoginState()
+        applyJunkLines(JunkCleaner.calculatingMenuLines)
     }
 
     @discardableResult
@@ -84,6 +94,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     func menuWillOpen(_ menu: NSMenu) {
         menuIsOpen = true
         refreshOpenAtLoginState()
+        refreshJunkDetails()
         let latest = (try? MemoryReader.read()) ?? snapshot
         guard let latest else { return }
         update(snapshot: latest, menuHighlighted: true)
@@ -98,9 +109,16 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     @objc private func cleanJunkFiles() {
         guard !isCleaningJunk else { return }
         isCleaningJunk = true
+        if let lastJunkScan, !isScanningJunk {
+            confirmJunkDeletion(lastJunkScan)
+            return
+        }
         DispatchQueue.global(qos: .utility).async { [weak self] in
             let scan = JunkCleaner.scan()
             DispatchQueue.main.async {
+                self?.lastJunkScan = scan
+                self?.isScanningJunk = false
+                self?.applyJunkLines(JunkCleaner.menuLines(for: scan))
                 self?.confirmJunkDeletion(scan)
             }
         }
@@ -130,6 +148,8 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         alert.informativeText = JunkCleaner.deletedText(bytes: bytes)
         alert.addButton(withTitle: "확인")
         alert.runModal()
+        lastJunkScan = nil
+        applyJunkLines(JunkCleaner.calculatingMenuLines)
         isCleaningJunk = false
     }
 
@@ -159,6 +179,8 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         let menu = NSMenu()
         menu.delegate = self
         detailItems.forEach(menu.addItem)
+        menu.addItem(.separator())
+        junkDetailItems.forEach(menu.addItem)
         menu.addItem(.separator())
 
         let junkItem = NSMenuItem(
@@ -202,8 +224,37 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         )
     }
 
+    private func refreshJunkDetails() {
+        if let lastJunkScan {
+            applyJunkLines(JunkCleaner.menuLines(for: lastJunkScan))
+        } else {
+            applyJunkLines(JunkCleaner.calculatingMenuLines)
+        }
+        guard !isScanningJunk, !isCleaningJunk else { return }
+        isScanningJunk = true
+        junkScanGeneration += 1
+        let generation = junkScanGeneration
+        DispatchQueue.global(qos: .utility).async { [weak self] in
+            let scan = JunkCleaner.scan()
+            DispatchQueue.main.async {
+                guard let self, generation == self.junkScanGeneration else { return }
+                self.lastJunkScan = scan
+                self.isScanningJunk = false
+                self.applyJunkLines(JunkCleaner.menuLines(for: scan))
+            }
+        }
+    }
+
     private func applyDetailLines(_ lines: [MemoryDetailLine]) {
-        for (item, line) in zip(detailItems, lines) {
+        applyLines(lines, to: detailItems)
+    }
+
+    private func applyJunkLines(_ lines: [MemoryDetailLine]) {
+        applyLines(lines, to: junkDetailItems)
+    }
+
+    private func applyLines(_ lines: [MemoryDetailLine], to items: [NSMenuItem]) {
+        for (item, line) in zip(items, lines) {
             item.title = "\(line.name)  \(line.value)"
             item.image = nil
         }
