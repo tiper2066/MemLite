@@ -1,4 +1,5 @@
 import AppKit
+import ServiceManagement
 
 enum MenuBarTitle {
     static func make(
@@ -31,6 +32,8 @@ enum MenuBarTitle {
 final class StatusItemController: NSObject, NSMenuDelegate {
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let detailItems: [NSMenuItem]
+    private let openAtLoginItem: NSMenuItem
+    private let versionItem: NSMenuItem
     private var snapshot: MemorySnapshot?
     private var rendered: RenderState?
     private var menuIsOpen = false
@@ -46,9 +49,18 @@ final class StatusItemController: NSObject, NSMenuDelegate {
             item.isEnabled = false
             return item
         }
+        openAtLoginItem = NSMenuItem(
+            title: "로그인 시 열기",
+            action: #selector(toggleOpenAtLogin),
+            keyEquivalent: ""
+        )
+        versionItem = NSMenuItem(title: Self.versionTitle, action: nil, keyEquivalent: "")
+        versionItem.isEnabled = false
         super.init()
+        openAtLoginItem.target = self
+        statusItem.button?.image = nil
         statusItem.menu = makeMenu()
-        applyMenuBarIcon()
+        refreshOpenAtLoginState()
     }
 
     @discardableResult
@@ -71,6 +83,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
     func menuWillOpen(_ menu: NSMenu) {
         menuIsOpen = true
+        refreshOpenAtLoginState()
         let latest = (try? MemoryReader.read()) ?? snapshot
         guard let latest else { return }
         update(snapshot: latest, menuHighlighted: true)
@@ -120,6 +133,24 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         isCleaningJunk = false
     }
 
+    @objc private func toggleOpenAtLogin() {
+        let shouldEnable = SMAppService.mainApp.status != .enabled
+        do {
+            if shouldEnable {
+                try SMAppService.mainApp.register()
+            } else {
+                try SMAppService.mainApp.unregister()
+            }
+        } catch {
+            let alert = NSAlert()
+            alert.messageText = "로그인 시 열기"
+            alert.informativeText = "로그인 항목을 바꾸지 못했습니다. 응용 프로그램 폴더에 설치한 뒤 다시 시도해 주세요."
+            alert.addButton(withTitle: "확인")
+            alert.runModal()
+        }
+        refreshOpenAtLoginState()
+    }
+
     @objc private func quit() {
         NSApp.terminate(nil)
     }
@@ -137,8 +168,10 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         )
         junkItem.target = self
         menu.addItem(junkItem)
+        menu.addItem(openAtLoginItem)
         menu.addItem(.separator())
 
+        menu.addItem(versionItem)
         let quitItem = NSMenuItem(
             title: "종료",
             action: #selector(quit),
@@ -149,15 +182,14 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         return menu
     }
 
-    private func applyMenuBarIcon() {
-        guard let image = NSImage(named: "MenuBarIcon") else {
-            return
-        }
-        image.isTemplate = true
-        image.size = NSSize(width: 18, height: 18)
-        statusItem.button?.image = image
-        statusItem.button?.imagePosition = .imageLeading
-        statusItem.button?.imageScaling = .scaleProportionallyDown
+    private func refreshOpenAtLoginState() {
+        openAtLoginItem.state = SMAppService.mainApp.status == .enabled ? .on : .off
+    }
+
+    private static var versionTitle: String {
+        let name = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? "MemLite"
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0"
+        return "\(name) \(version)"
     }
 
     private func applyMenuBarTitle(_ state: RenderState) {
@@ -191,6 +223,10 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
     var debugTitle: NSAttributedString {
         statusItem.button?.attributedTitle ?? NSAttributedString()
+    }
+
+    var debugButtonImage: NSImage? {
+        statusItem.button?.image
     }
     #endif
 }

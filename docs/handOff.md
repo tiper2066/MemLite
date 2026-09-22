@@ -4,9 +4,11 @@
 
 ## 현재 상태
 
-- 9단계 확인까지 마쳤다. 설치 위치는 `/Applications/MemLite.app`이고, 설치 파일은 `dist/MemLite.dmg`이다.
-- 작성된 문서는 `docs/development-plan.md`와 `docs/handOff.md`이다.
+- 9단계와 이후 아이콘·로그인·버전 확인까지 마쳤다. 설치 위치는 `/Applications/MemLite.app`이고, 설치 파일은 `dist/MemLite.dmg`이다.
+- 저장소는 [https://github.com/tiper2066/MemLite](https://github.com/tiper2066/MemLite)이다.
+- 작성된 문서는 `README.md`, `docs/development-plan.md`, `docs/handOff.md`이다.
 - 개인용 macOS 메뉴 막대 앱이다. 최소 버전은 macOS 14.0 (Sonoma)이다.
+- 앱 아이콘은 `assets/icon-menubar.png`이다. 메뉴 막대에는 아이콘을 넣지 않는다.
 
 ## 구현할 때 지킬 것
 
@@ -17,6 +19,8 @@
 - 메모리 정리(파일 캐시 강제 비우기)는 넣지 않는다.
 - 정크 정리는 메뉴를 골랐을 때만 하고, 2초 갱신에는 넣지 않는다.
 - 지우면 계정, 동기화, 보관함, 보안, 시스템 동작에 문제가 되는 파일은 용량 계산과 삭제 모두에서 뺀다.
+- 메뉴 막대에는 이미지를 넣지 않는다. 앱 아이콘만 Finder에 쓴다.
+- 로그인 시 열기는 설정 창 없이 `SMAppService.mainApp`만 쓴다.
 
 ## 1. Xcode 프로젝트
 
@@ -73,7 +77,9 @@
 - [x] 상세 7항목을 메뉴에 표시한다. 이 항목은 눌리지 않는 정보 행이다.
 - [x] 상세 항목 아래 구분선을 둔다.
 - [x] **정크 파일 정리…** 항목을 둔다.
+- [x] **로그인 시 열기** 항목을 두고, `SMAppService.mainApp`으로 켜고 끈다.
 - [x] 그 아래 구분선을 둔다.
+- [x] 눌리지 않는 **MemLite 1.0** 버전 한 줄을 둔다.
 - [x] **종료** 항목을 두고, 선택하면 앱을 종료한다.
 - [x] 메뉴가 열린 동안 메모리 수치를 갱신한다. 색은 4번의 강조 규칙을 따른다.
 
@@ -130,3 +136,11 @@
 - [x] `dist/MemLite.dmg`를 열면 앱과 응용 프로그램 폴더가 보인다.
 - [x] 앱을 응용 프로그램 폴더로 복사하면 `/Applications/MemLite.app`에 설치된다.
 - [x] 설치한 MemLite를 한 번 열면 메뉴 막대에 나타난다.
+
+## 10. 아이콘, 로그인, 버전
+
+- [x] 응용 프로그램 폴더 앱 아이콘은 `assets/icon-menubar.png`로 둔다. 작은 크기에서 뭉개지는 `assets/icon-app.png`는 쓰지 않는다.
+- [x] 메뉴 막대에는 아이콘을 넣지 않고 숫자만 그린다.
+- [x] 메뉴에 **로그인 시 열기**를 둔다. 응용 프로그램 폴더에 설치한 앱에서만 등록한다. 실패하면 안내를 띄운다.
+- [x] 메뉴에 눌리지 않는 **MemLite 1.0**을 둔다.
+- [x] `README.md`에 클론과 `./scripts/create-dmg.sh`로 설치 파일을 만드는 방법을 둔다.
